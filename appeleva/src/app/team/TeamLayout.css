@@ -1,0 +1,149 @@
+.header {
+  background: linear-gradient(
+    99deg,
+    rgba(82, 82, 255, 0.9) 14%,
+    rgba(82, 26, 243, 0.9) 34%,
+    rgba(60, 14, 157, 0.9) 59%,
+    rgba(164, 130, 198, 0.9) 88%
+  );
+  margin: 0;
+  height: 5.5dvh;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+}
+
+.brand-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 5dvh;
+}
+
+.eleva {
+  margin-right: 8px;
+  font-family: var(--main-text-font);
+  color: white;
+  font-size: 1rem;
+  width: 164px;
+}
+.logo-img {
+  max-height: 29px;
+}
+
+/*--------------------Menu Hamburguesa--------------------*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+}
+ul {
+  list-style: none;
+}
+
+li {
+  text-align: center;
+}
+
+.navbar {
+  height: 100%;
+  display: flex;
+  width: min(1200px, 100%);
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  position: relative;
+  padding: 0 1rem;
+}
+.menu-hamburguesa {
+  display: none;
+}
+.menu-hamburguesa:checked + .ul-links {
+  height: 95dvh;
+}
+.brand-container {
+}
+.eleva {
+}
+.logo-img {
+}
+.labe-hamburguesa {
+}
+.list-icon {
+  color: greenyellow;
+  cursor: pointer;
+}
+.ul-links {
+  width: 65%;
+  background: linear-gradient(
+    138deg,
+    rgba(82, 82, 255, 0.96) 0%,
+    rgba(179, 82, 255, 0.96) 88%
+  );
+
+  position: absolute;
+  top: 5dvh;
+  left: 0;
+  height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+
+  transition: all 0.3s;
+}
+.li-links {
+}
+.links {
+  font-size: 1.5em;
+  color: white;
+  font-weight: bold;
+}
+
+@media (min-width: 768px) {
+  .labe-hamburguesa {
+    display: none;
+  }
+  .ul-links {
+    position: static;
+    width: auto;
+    flex-direction: row;
+    gap: 19px;
+    background-color: #00000000;
+  }
+  .menu-hamburguesa + .ul-links {
+    height: auto;
+  }
+  .links {
+    font-size: 1.1rem;
+    transition: all 0.3s;
+    font-weight: 100;
+  }
+  .links:hover {
+    background-color: rgb(221, 0, 255);
+  }
+}
+
+@media (width > 1023px) {
+  .ul-links {
+    gap: 55px;
+  }
+  .links {
+    font-size: 1.3rem;
+  }
+  .eleva {
+    font-size: 1.4rem;
+    width: 226px;
+  }
+  .logo-img {
+    max-height: 38px;
+  }
+}
