@@ -18,3 +18,17 @@ export async function GET() {
     return NextResponse.json({ error: err.message });
   }
 }
+
+export async function POST(request) {
+  await connection;
+
+  try {
+    const data = request.data;
+    const training = new Trainings(data);
+    const newTraining = await training.save();
+
+    return NextResponse.json(newTraining);
+  } catch (err) {
+    return NextResponse.json({ error: err.message });
+  }
+}

@@ -13,7 +13,7 @@ export default function Home() {
         <Image
           className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
           src="/ELEVALOGO.svg"
-          alt="Next.js Logo"
+          alt="ElevaTuCLub logo"
           width={1500}
           height={837}
           priority
