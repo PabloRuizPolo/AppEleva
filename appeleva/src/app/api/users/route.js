@@ -11,6 +11,8 @@ export async function GET() {
   try {
     const users = await User.find({});
 
+    console.log(users);
+
     return NextResponse.json(users);
   } catch (err) {
     return NextResponse.json({ error: err.message });

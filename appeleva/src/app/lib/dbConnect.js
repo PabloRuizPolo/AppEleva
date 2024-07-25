@@ -26,4 +26,4 @@ const mongodbURL = process.env.MONGODB_URI;
 
 mongoose.connect(mongodbURL);
 
-module.export = mongoose.connection;
+module.exports = mongoose.connection;
