@@ -1,5 +1,6 @@
 const db = require("../../lib/dbConnect");
-import User from "@/app/lib/models/User";
+
+import Trainings from "@/app/lib/models/trainings";
 import { NextResponse } from "next/server";
 
 const connection = db.connection;
@@ -8,11 +9,11 @@ export async function GET() {
   await connection;
 
   try {
-    const users = await User.find({});
+    const trainings = await Trainings.find({});
 
-    console.log(users);
+    console.log(trainings);
 
-    return NextResponse.json(users);
+    return NextResponse.json(trainings);
   } catch (err) {
     return NextResponse.json({ error: err.message });
   }

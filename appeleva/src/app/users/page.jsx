@@ -8,7 +8,6 @@ export default function PageUsers() {
   const fetchUsers = async () => {
     const res = await fetch("http://localhost:3000/api/users");
     const users = await res.json();
-    console.log(users);
     return users;
   };
 
@@ -18,7 +17,6 @@ export default function PageUsers() {
     });
     return;
   }, []);
-  //const users = await fetchUsers();
 
   return (
     <div>
