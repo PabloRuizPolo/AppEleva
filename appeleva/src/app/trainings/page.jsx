@@ -1,18 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { getTrainings } from "./service";
 
 export default function PageUsers() {
   const [trainings, setTrainings] = useState([]);
 
-  const fetchUsers = async () => {
-    const res = await fetch("http://localhost:3000/api/trainings");
-    const trainings = await res.json();
-    return trainings;
-  };
-
   useEffect(() => {
-    fetchUsers().then((trainings) => {
+    getTrainings().then((trainings) => {
       setTrainings(trainings);
     });
     return;
@@ -20,7 +15,7 @@ export default function PageUsers() {
 
   return (
     <div>
-      <h1>Usuarios</h1>
+      <h1>Entrenos</h1>
       {trainings.length === 0 ? (
         <p>Cargando entrenos...</p>
       ) : (
