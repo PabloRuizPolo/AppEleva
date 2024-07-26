@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import FormField from "./components/FormField";
+import FormField from "./newTraining/components/FormField";
 import Button from "@/app/shared/components/Button";
-import { postTraining } from "@/app/trainings/service";
+import { postTraining } from "./service";
 
 export default function TrainingForm() {
   const [trainingData, setTrainingData] = useState({
@@ -48,11 +48,8 @@ export default function TrainingForm() {
     const newTraining = { name, date, intensity, tags, exercises };
     event.preventDefault();
 
-    const endpoint = "api/trainings";
-
     try {
-      console.log(newTraining);
-      await postTraining(newTraining, endpoint);
+      await postTraining(newTraining);
     } catch (error) {}
   };
 

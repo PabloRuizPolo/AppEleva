@@ -26,6 +26,7 @@ export async function POST(request) {
     const data = request.data;
     const training = new Trainings(data);
     const newTraining = await training.save();
+    console.log(newTraining);
 
     return NextResponse.json(newTraining);
   } catch (err) {
