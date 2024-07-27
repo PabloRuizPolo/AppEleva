@@ -23,13 +23,18 @@ export async function POST(request) {
   await connection;
 
   try {
-    const { name, date, intensity, tags, exercise } = await request.json();
+    const { name, date, intensity, tags, exercises } = await request.json();
+
+    if (!Array.isArray(exercises)) {
+      return NextResponse.json({ error: "Exercises must be an array" });
+    }
+
     const newTraining = await Trainings.create({
       name,
       date,
       intensity,
       tags,
-      exercise,
+      exercises,
     });
 
     return NextResponse.json(newTraining);

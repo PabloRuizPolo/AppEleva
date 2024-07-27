@@ -49,6 +49,12 @@ export default function TrainingForm() {
   const handleSubmit = async (event) => {
     const { name, date, intensity, tags, exercises } = trainingData;
 
+    // Verify that exercises is an array before sending
+    if (!Array.isArray(exercises) || exercises.length === 0) {
+      console.error("Error: No hay ejercicios para guardar");
+      return;
+    }
+
     const newTraining = { name, date, intensity, tags, exercises };
     event.preventDefault();
 
@@ -94,6 +100,21 @@ export default function TrainingForm() {
         onChange={handleChange}
         className="newAdd-formField"
       />
+
+      {/* Display existing exercises */}
+      <h2>Ejercicios Añadidos</h2>
+      {exercises.length > 0 && (
+        <ul>
+          {exercises.map((exercise) => (
+            <li key={exercise._id || Math.random()}>
+              <p>Nombre ejercicio: {exercise.nameEx}</p>
+              <p>Descripción: {exercise.description}</p>
+              {exercise.videoUrl && <p>Video: {exercise.videoUrl}</p>}
+            </li>
+          ))}
+        </ul>
+      )}
+
       <FormField
         type="text"
         name="nameEx"
@@ -124,7 +145,6 @@ export default function TrainingForm() {
       <Button type="submit" $variant="main" disabled={disabledButton}>
         Crear Entreno
       </Button>
-      {/* Botón para enviar el formulario */}
     </form>
   );
 }
