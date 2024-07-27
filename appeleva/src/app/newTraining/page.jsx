@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import FormField from "./components/FormField";
 import Button from "@/app/shared/components/Button";
 import { postTraining } from "./service";
+import { useRouter } from "next/navigation";
 
 export default function TrainingForm() {
   const [trainingData, setTrainingData] = useState({
@@ -14,12 +15,15 @@ export default function TrainingForm() {
   });
 
   const [exerciseData, setExerciseData] = useState({
-    name: "",
+    nameEx: "",
     description: "",
     videoUrl: "",
   });
 
+  const router = useRouter();
+
   const { name, date, intensity, tags, exercises } = trainingData;
+  const { nameEx, description, videoUrl } = exerciseData;
 
   // Función para manejar los cambios en el formulario
   const handleChange = (e) => {
@@ -39,7 +43,7 @@ export default function TrainingForm() {
       ...trainingData,
       exercises: [...trainingData.exercises, exerciseData],
     });
-    setExerciseData({ name: "", description: "", videoUrl: "" });
+    setExerciseData({ nameEx: "", description: "", videoUrl: "" });
   };
 
   const handleSubmit = async (event) => {
@@ -49,8 +53,15 @@ export default function TrainingForm() {
     event.preventDefault();
 
     try {
-      await postTraining(newTraining);
-    } catch (error) {}
+      const res = await postTraining(newTraining);
+      if (res) {
+        router.push("/");
+      } else {
+        throw new Error("Failed to create a training");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const disabledButton = !name || !intensity || !tags;
@@ -83,7 +94,30 @@ export default function TrainingForm() {
         onChange={handleChange}
         className="newAdd-formField"
       />
-      {/* Campos para los datos de un ejercicio */}
+      <FormField
+        type="text"
+        name="nameEx"
+        label="nameEx"
+        value={nameEx}
+        onChange={handleExerciseChange}
+        className="newAdd-formField"
+      />
+      <FormField
+        type="text"
+        name="description"
+        label="description"
+        value={description}
+        onChange={handleExerciseChange}
+        className="newAdd-formField"
+      />
+      <FormField
+        type="text"
+        name="videoUrl"
+        label="videoUrl"
+        value={videoUrl}
+        onChange={handleExerciseChange}
+        className="newAdd-formField"
+      />
       <button type="button" onClick={addExercise}>
         Agregar Ejercicio
       </button>
