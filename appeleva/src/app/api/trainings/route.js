@@ -23,10 +23,14 @@ export async function POST(request) {
   await connection;
 
   try {
-    const data = request.data;
-    const training = new Trainings(data);
-    const newTraining = await training.save();
-    console.log(newTraining);
+    const { name, date, intensity, tags, exercise } = await request.json();
+    const newTraining = await Trainings.create({
+      name,
+      date,
+      intensity,
+      tags,
+      exercise,
+    });
 
     return NextResponse.json(newTraining);
   } catch (err) {

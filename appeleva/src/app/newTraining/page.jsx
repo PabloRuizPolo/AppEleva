@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import FormField from "./newTraining/components/FormField";
+import FormField from "./components/FormField";
 import Button from "@/app/shared/components/Button";
 import { postTraining } from "./service";
 
