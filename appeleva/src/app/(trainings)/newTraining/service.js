@@ -1,4 +1,4 @@
-import { client } from "../api/client";
+import { client } from "@/app/api/client";
 
 const apiUrl = "api/trainings";
 
