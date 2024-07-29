@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getTrainings } from "./service";
+import AdminHeader from "@/app/admin/components/AdminHeader";
 
 export default function PageUsers() {
   let key = 1;
@@ -16,6 +17,7 @@ export default function PageUsers() {
 
   return (
     <div>
+      <AdminHeader />
       <h1>Entrenos</h1>
       {trainings.length === 0 ? (
         <p>Cargando entrenos...</p>

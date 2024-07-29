@@ -4,6 +4,7 @@ import FormField from "./components/FormField";
 import Button from "@/app/shared/components/Button";
 import { postTraining } from "./service";
 import { useRouter } from "next/navigation";
+import AdminHeader from "@/app/admin/components/AdminHeader";
 
 export default function TrainingForm() {
   const [trainingData, setTrainingData] = useState({
@@ -73,78 +74,81 @@ export default function TrainingForm() {
   const disabledButton = !name || !intensity || !tags;
 
   return (
-    <form onSubmit={handleSubmit}>
-      <FormField
-        type="text"
-        name="name"
-        label="Nombre Entreno"
-        value={name}
-        onChange={handleChange}
-        className="newAdd-formField"
-      />
+    <div>
+      <AdminHeader />
+      <form onSubmit={handleSubmit}>
+        <FormField
+          type="text"
+          name="name"
+          label="Nombre Entreno"
+          value={name}
+          onChange={handleChange}
+          className="newAdd-formField"
+        />
 
-      <FormField
-        type="number"
-        name="intensity"
-        label="Intensidad"
-        value={intensity}
-        onChange={handleChange}
-        className="newAdd-formField"
-      />
+        <FormField
+          type="number"
+          name="intensity"
+          label="Intensidad"
+          value={intensity}
+          onChange={handleChange}
+          className="newAdd-formField"
+        />
 
-      <FormField
-        type="text"
-        name="tags"
-        label="Etiquetas"
-        value={tags}
-        onChange={handleChange}
-        className="newAdd-formField"
-      />
+        <FormField
+          type="text"
+          name="tags"
+          label="Etiquetas"
+          value={tags}
+          onChange={handleChange}
+          className="newAdd-formField"
+        />
 
-      {/* Display existing exercises */}
-      <h2>Ejercicios Añadidos</h2>
-      {exercises.length > 0 && (
-        <ul>
-          {exercises.map((exercise) => (
-            <li key={exercise._id || Math.random()}>
-              <p>Nombre ejercicio: {exercise.nameEx}</p>
-              <p>Descripción: {exercise.description}</p>
-              {exercise.videoUrl && <p>Video: {exercise.videoUrl}</p>}
-            </li>
-          ))}
-        </ul>
-      )}
+        {/* Display existing exercises */}
+        <h2>Ejercicios Añadidos</h2>
+        {exercises.length > 0 && (
+          <ul>
+            {exercises.map((exercise) => (
+              <li key={exercise._id || Math.random()}>
+                <p>Nombre ejercicio: {exercise.nameEx}</p>
+                <p>Descripción: {exercise.description}</p>
+                {exercise.videoUrl && <p>Video: {exercise.videoUrl}</p>}
+              </li>
+            ))}
+          </ul>
+        )}
 
-      <FormField
-        type="text"
-        name="nameEx"
-        label="nameEx"
-        value={nameEx}
-        onChange={handleExerciseChange}
-        className="newAdd-formField"
-      />
-      <FormField
-        type="text"
-        name="description"
-        label="description"
-        value={description}
-        onChange={handleExerciseChange}
-        className="newAdd-formField"
-      />
-      <FormField
-        type="text"
-        name="videoUrl"
-        label="videoUrl"
-        value={videoUrl}
-        onChange={handleExerciseChange}
-        className="newAdd-formField"
-      />
-      <button type="button" onClick={addExercise}>
-        Agregar Ejercicio
-      </button>
-      <Button type="submit" $variant="main" disabled={disabledButton}>
-        Crear Entreno
-      </Button>
-    </form>
+        <FormField
+          type="text"
+          name="nameEx"
+          label="nameEx"
+          value={nameEx}
+          onChange={handleExerciseChange}
+          className="newAdd-formField"
+        />
+        <FormField
+          type="text"
+          name="description"
+          label="description"
+          value={description}
+          onChange={handleExerciseChange}
+          className="newAdd-formField"
+        />
+        <FormField
+          type="text"
+          name="videoUrl"
+          label="videoUrl"
+          value={videoUrl}
+          onChange={handleExerciseChange}
+          className="newAdd-formField"
+        />
+        <button type="button" onClick={addExercise}>
+          Agregar Ejercicio
+        </button>
+        <Button type="submit" $variant="main" disabled={disabledButton}>
+          Crear Entreno
+        </Button>
+      </form>
+    </div>
   );
 }
