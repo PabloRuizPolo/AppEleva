@@ -10,6 +10,10 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^5.2.8",
+<<<<<<< HEAD
+=======
+    "@clerk/themes": "^2.1.14",
+>>>>>>> fcc331273641937d03b73fc063bac28f433f28e9
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.5",
     "axios": "^1.7.2",
@@ -21,7 +25,8 @@
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
-    "styled-components": "^6.1.12"
+    "styled-components": "^6.1.12",
+    "svix": "^1.25.0"
   },
   "devDependencies": {
     "daisyui": "^4.12.10",

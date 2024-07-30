@@ -1,11 +1,19 @@
+"use client";
+import { useUser } from "@clerk/nextjs";
 import React from "react";
 
 export default function HomeTeamPage() {
+  const { isLoaded, isSignedIn, user } = useUser();
+
+  if (!isLoaded || !isSignedIn) {
+    return null;
+  }
+
   return (
     <main className="flex flex-col space-y-5 justify-center justify-items-center items-center	">
       <section>
         <h2>Preparación Física del </h2>
-        <h1>JUNIOR MASCULINO A</h1>
+        <h1>{user?.firstName}</h1>
       </section>
       <section className="flex flex-col space-y-5 justify-center justify-items-center items-cente">
         <h4>COMENTARIO DE LA SEMANA</h4>
