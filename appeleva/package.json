@@ -10,10 +10,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^5.2.8",
-<<<<<<< HEAD
-=======
     "@clerk/themes": "^2.1.14",
->>>>>>> fcc331273641937d03b73fc063bac28f433f28e9
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.5",
     "axios": "^1.7.2",
