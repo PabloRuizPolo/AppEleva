@@ -1,6 +1,7 @@
+import { UserButton } from "@clerk/nextjs";
 import "./header.css";
 
-export default function Header() {
+export default function TeamNavbar() {
   return (
     <header className="header">
       <nav className="navbar">
@@ -43,6 +44,9 @@ export default function Header() {
             <a className="links" href="">
               Calendario
             </a>
+          </li>
+          <li>
+            <UserButton />
           </li>
         </ul>
       </nav>

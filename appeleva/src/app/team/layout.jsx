@@ -1,11 +1,11 @@
 import React from "react";
-import Header from "./components/header";
+import TeamNavbar from "./components/TeamNavbar";
 
 export default function TeamLayout({ children }) {
   return (
-    <body>
-      <Header />
+    <div>
+      <TeamNavbar />
       {children}
-    </body>
+    </div>
   );
 }

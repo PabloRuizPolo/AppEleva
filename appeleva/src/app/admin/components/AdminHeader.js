@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Dialog, DialogPanel, PopoverGroup } from "@headlessui/react";
 import {
@@ -14,43 +16,7 @@ import {
   PhoneIcon,
   PlayCircleIcon,
 } from "@heroicons/react/20/solid";
-
-const products = [
-  {
-    name: "Analytics",
-    description: "Get a better understanding of your traffic",
-    href: "#",
-    icon: ChartPieIcon,
-  },
-  {
-    name: "Engagement",
-    description: "Speak directly to your customers",
-    href: "#",
-    icon: CursorArrowRaysIcon,
-  },
-  {
-    name: "Security",
-    description: "Your customers’ data will be safe and secure",
-    href: "#",
-    icon: FingerPrintIcon,
-  },
-  {
-    name: "Integrations",
-    description: "Connect with third-party tools",
-    href: "#",
-    icon: SquaresPlusIcon,
-  },
-  {
-    name: "Automations",
-    description: "Build strategic funnels that will convert",
-    href: "#",
-    icon: ArrowPathIcon,
-  },
-];
-const callsToAction = [
-  { name: "Watch demo", href: "#", icon: PlayCircleIcon },
-  { name: "Contact sales", href: "#", icon: PhoneIcon },
-];
+import { UserButton } from "@clerk/nextjs";
 
 export default function AdminHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -96,16 +62,14 @@ export default function AdminHeader() {
             Usuarios
           </a>
           <a
-            href="/admin"
+            href="/admin/home"
             className="text-sm font-semibold leading-6 text-gray-900"
           >
             AdminPage
           </a>
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Log in <span aria-hidden="true">&rarr;</span>
-          </a>
+          <UserButton />
         </div>
       </nav>
       <Dialog
@@ -144,7 +108,7 @@ export default function AdminHeader() {
                 </a>
 
                 <a
-                  href="/app/trainings/trainings"
+                  href="/trainings"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Entrenos
@@ -156,19 +120,14 @@ export default function AdminHeader() {
                   Usuarios
                 </a>
                 <a
-                  href="/admin"
+                  href="/admin/home"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   AdminPage
                 </a>
               </div>
               <div className="py-6">
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </a>
+                <UserButton />
               </div>
             </div>
           </div>

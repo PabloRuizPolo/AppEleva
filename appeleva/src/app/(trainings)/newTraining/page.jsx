@@ -62,7 +62,7 @@ export default function TrainingForm() {
     try {
       const res = await postTraining(newTraining);
       if (res) {
-        router.push("/");
+        router.push("/admin/home");
       } else {
         throw new Error("Failed to create a training");
       }
