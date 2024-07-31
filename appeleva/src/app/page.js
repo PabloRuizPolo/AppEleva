@@ -31,7 +31,7 @@ export default async function Home() {
       <Link
         if
         href={
-          userId === "user_2jvWsJw2lyHt7NWrC7aAmzmypXi"
+          userId === "user_2k1GnC5wgQwg9m9FqZ5BzgyTMCE"
             ? "/admin/home"
             : "/team/home"
         }
