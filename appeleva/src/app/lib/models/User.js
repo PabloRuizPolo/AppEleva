@@ -8,7 +8,7 @@ const userSchema = new Schema({
   },
   email: { type: String, required: true },
   username: { type: String, unique: true, required: true },
-  password: { type: String, required: true },
+  password: { type: String },
 });
 
 const User = models.User || model("User", userSchema);

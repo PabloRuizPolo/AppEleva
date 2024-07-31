@@ -57,13 +57,12 @@ export async function POST(req) {
 
   //Create user in mongodb
   if (eventType === "user.created") {
-    const { id, email_addresess, username, password } = evt.data;
+    const { id, email_addresses, username, password } = evt.data;
 
     const user = {
       clerkId: id,
-      email: email_addresess,
+      email: email_addresses[0].email_address,
       username: username,
-      password: password,
     };
 
     console.log(user);
