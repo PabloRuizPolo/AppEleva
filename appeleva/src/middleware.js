@@ -1,16 +1,16 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-const isTenantRoute = createRouteMatcher(["/team(.*)"]);
+/*const isTenantRoute = createRouteMatcher(["/team(.*)"]);
 
 const isTenantAdminRoute = createRouteMatcher([
   "/admin(.*)",
   "/trainings(.*)",
   "/newTraining(.*)",
-]);
+]);*/
 
 export default clerkMiddleware((auth, req) => {
   // Restrict admin routes to users with specific permissions
-  if (isTenantAdminRoute(req)) {
+  /*if (isTenantAdminRoute(req)) {
     auth().protect((has) => {
       return (
         has({ permission: "org:memberships:manage" }) ||
@@ -20,7 +20,7 @@ export default clerkMiddleware((auth, req) => {
     });
   }
   // Restrict organization routes to signed in users
-  if (isTenantRoute(req)) auth().protect();
+  if (isTenantRoute(req)) auth().protect();*/
 });
 
 export const config = {

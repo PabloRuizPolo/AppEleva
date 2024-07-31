@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+/*import mongoose from "mongoose";
 
 require("dotenv").config();
 
@@ -13,3 +13,31 @@ const mongodbURL = process.env.MONGODB_URI;
 mongoose.connect(mongodbURL);
 
 module.exports = mongoose.connection;
+*/
+
+import mongoose from "mongoose";
+
+const mongodbURL = process.env.MONGODB_URI;
+
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = {
+    conn: null,
+    promise: null,
+  };
+}
+
+export const connect = async () => {
+  if (cached.conn) return cached.conn;
+
+  cached.promise =
+    cached.promise ||
+    mongoose.connect(mongodbURL, {
+      dbName: "test",
+      bufferCommands: false,
+      connectTimeoutMS: 3000,
+    });
+
+  cached.conn = await cached.promise;
+};

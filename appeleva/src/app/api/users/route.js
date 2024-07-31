@@ -1,9 +1,7 @@
-const db = require("../../lib/dbConnect");
+import { connect } from "../../lib/dbConnect";
 import User from "@/app/lib/models/User";
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-
-const connection = db.connection;
 
 export async function GET() {
   const { userId } = auth();
@@ -11,7 +9,7 @@ export async function GET() {
   if (userId !== "user_2jvWsJw2lyHt7NWrC7aAmzmypXi") {
     return NextResponse.json({ message: 'No autenticado"' });
   }
-  await connection;
+  await connect();
 
   try {
     const users = await User.find({});

@@ -4,7 +4,7 @@ import Trainings from "@/app/lib/models/trainings";
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-const connection = db.connection;
+import { connect } from "../../lib/dbConnect";
 
 export async function GET() {
   const { userId } = auth();
@@ -13,7 +13,7 @@ export async function GET() {
     return NextResponse.json({ message: 'No autenticado"' });
   }
 
-  await connection;
+  await connect();
 
   try {
     const trainings = await Trainings.find({});
@@ -32,8 +32,7 @@ export async function POST(request) {
   if (userId !== "user_2jvWsJw2lyHt7NWrC7aAmzmypXi") {
     return NextResponse.json({ message: 'No autenticado"' });
   }
-  await connection;
-
+  await connect();
   try {
     const { name, date, intensity, tags, exercises } = await request.json();
 
