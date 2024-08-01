@@ -30,11 +30,7 @@ export default async function Home() {
       <p className="text-3xl">Hello {user.username}</p>
       <Link
         if
-        href={
-          userId === "user_2k1GnC5wgQwg9m9FqZ5BzgyTMCE"
-            ? "/admin/home"
-            : "/team/home"
-        }
+        href={userId === process.env.USERELEVAID ? "/admin/home" : "/team/home"}
         className="text-4xl"
       >
         {" "}

@@ -9,7 +9,7 @@ import { connect } from "../../lib/dbConnect";
 export async function GET() {
   const { userId } = auth();
 
-  if (userId !== "user_2jvWsJw2lyHt7NWrC7aAmzmypXi") {
+  if (userId !== process.env.USERELEVAID) {
     return NextResponse.json({ message: 'No autenticado"' });
   }
 
