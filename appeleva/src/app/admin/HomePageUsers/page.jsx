@@ -10,11 +10,17 @@ function HomePageUsers() {
   const [newTeamPage, setNewTeamPage] = useState({
     comments: "",
     intensity: "",
-    trainingCalendar: [], // Ensure this is an array
+    trainingCalendar: [], // Array of training day objects
     calendarImage: "",
     graphImage: "",
     mesocycleComment: "",
   });
+
+  const [newTrainingDay, setNewTrainingDay] = useState({
+    day: "",
+    trainings: [],
+  });
+
   const [isEditing, setIsEditing] = useState(false);
   const [editingId, setEditingId] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -28,7 +34,9 @@ function HomePageUsers() {
     calendarImage,
     graphImage,
     mesocycleComment,
-  } = homePageUsers;
+  } = newTeamPage;
+
+  const { day, trainings } = newTrainingDay;
 
   useEffect(() => {
     const fetchHomePageUsers = async () => {
@@ -46,20 +54,55 @@ function HomePageUsers() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setHomePageUsers({ ...homePageUsers, [name]: value });
+    setNewTeamPage({ ...newTeamPage, [name]: value });
+  };
+
+  const handleChangeDay = (e) => {
+    const { name, value } = e.target;
+    setNewTrainingDay({ ...newTrainingDay, [name]: value }); // Update newTrainingDay state with day number
+  };
+
+  const addDay = () => {
+    const updatedTrainingCalendar = [
+      ...newTeamPage.trainingCalendar,
+      newTrainingDay,
+    ]; // Add newTrainingDay object
+    setNewTeamPage({
+      ...newTeamPage,
+      trainingCalendar: updatedTrainingCalendar,
+    });
+    setNewTrainingDay({ day: "", trainings: [] }); // Reset newTrainingDay state
+  };
+
+  const handleAddTrainingLink = (dayIndex) => {
+    const updatedTrainingCalendar = [...newTeamPage.trainingCalendar];
+    updatedTrainingCalendar[dayIndex].trainings.push({ link: "" }); // Add empty link object
+    setNewTeamPage({
+      ...newTeamPage,
+      trainingCalendar: updatedTrainingCalendar,
+    });
+  };
+
+  const handleRemoveTrainingLink = (dayIndex, linkIndex) => {
+    const updatedTrainingCalendar = [...newTeamPage.trainingCalendar];
+    updatedTrainingCalendar[dayIndex].trainings.splice(linkIndex, 1); // Remove link at index
+    setNewTeamPage({
+      ...newTeamPage,
+      trainingCalendar: updatedTrainingCalendar,
+    });
   };
 
   const handleCreate = async (event) => {
     const {
       comments,
       intensity,
-      trainingCalendar,
+      trainingCalendar, // Training calendar with links
       calendarImage,
       graphImage,
       mesocycleComment,
-    } = homePageUsers;
+    } = newTeamPage;
 
-    const newTeamPage = {
+    const newTeamPageReal = {
       comments,
       intensity,
       trainingCalendar,
@@ -68,46 +111,13 @@ function HomePageUsers() {
       mesocycleComment,
     };
     event.preventDefault();
-    console.log("New TeamPage data:", newTeamPage);
+    console.log("New TeamPage data:", newTeamPageReal);
     try {
-      await axios.post("/api/TeamPage", newTeamPage);
-      /*setHomePageUsers([...homePageUsers, response.data]); // Update local state
-      setNewTeamPage({
-        // Reiniciar el formulario
-        comments: "",
-        intensity: "",
-        // ... otros campos
-      });*/
-      router.push("/");
+      await axios.post("/api/TeamPage", newTeamPageReal);
+
+      router.refresh();
     } catch (error) {
       console.error("Error al crear TeamPage:", error);
-    }
-  };
-
-  const handleEdit = (id) => {
-    const teamPageToEdit = homePageUsers.find(
-      (teamPage) => teamPage._id === id
-    );
-    setNewTeamPage(teamPageToEdit);
-    setIsEditing(true);
-    setEditingId(id);
-  };
-
-  const handleUpdate = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await axios.put(
-        `/api/TeamPage/${editingId}`,
-        newTeamPage
-      ); // Using PUT for update
-      const updatedHomePageUsers = homePageUsers.map((teamPage) =>
-        teamPage._id === editingId ? response.data : teamPage
-      );
-      setHomePageUsers(updatedHomePageUsers);
-      setIsEditing(false);
-      setEditingId("");
-    } catch (error) {
-      console.error("Error al actualizar TeamPage:", error);
     }
   };
 
@@ -139,8 +149,93 @@ function HomePageUsers() {
           onChange={handleChange}
           className={"newAdd - formField"}
         />
-
-        <button type="submit">{isEditing ? "Actualizar" : "Crear"}</button>
+        <FormField
+          type="number"
+          name="intensity"
+          label="Intensidad Semana"
+          value={intensity}
+          onChange={handleChange}
+          className={"newAdd - formField"}
+        />
+        <FormField
+          type="text"
+          name="mesocycleComment"
+          label="Comentario Meociclo"
+          value={mesocycleComment}
+          onChange={handleChange}
+          className={"newAdd - formField"}
+        />
+        <h2>Días Añadidos</h2>
+        {trainingCalendar && trainingCalendar.length > 0 && (
+          <ul>
+            {trainingCalendar.map((day) => (
+              <li key={day._id || Math.random()}>
+                <p>Día: {day.day}</p>
+                {/* Assuming 'links' field exists within each 'day' object */}
+                <p>Link: {day.links}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+        <h2>Días de Entrenamiento</h2>
+        <div>
+          <FormField
+            type="number"
+            name="day"
+            label="Día"
+            value={day} // Use the value from newTrainingDay state
+            onChange={handleChangeDay}
+            className={"newAdd - formField"}
+          />
+          <button type="button" onClick={addDay}>
+            Agregar Día de Entrenamiento
+          </button>
+        </div>
+        {newTeamPage.trainingCalendar.map((trainingDay, dayIndex) => (
+          <div key={dayIndex} className="training-day-container">
+            <p>Día: {trainingDay.day}</p>
+            {trainingDay.trainings.map((training, linkIndex) => (
+              <div key={linkIndex}>
+                <FormField
+                  type="text"
+                  name={`link-${dayIndex}-${linkIndex}`}
+                  label="Enlace"
+                  value={training.link}
+                  onChange={(e) => {
+                    const updatedTrainingCalendar = [
+                      ...newTeamPage.trainingCalendar,
+                    ];
+                    updatedTrainingCalendar[dayIndex].trainings[
+                      linkIndex
+                    ].link = e.target.value;
+                    setNewTeamPage({
+                      ...newTeamPage,
+                      trainingCalendar: updatedTrainingCalendar,
+                    });
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={() => handleRemoveTrainingLink(dayIndex, linkIndex)}
+                >
+                  Eliminar Enlace
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() => handleAddTrainingLink(dayIndex)}
+            >
+              Agregar Enlace
+            </button>
+            <button type="button" onClick={() => handleRemoveDay(dayIndex)}>
+              Eliminar Día
+            </button>
+          </div>
+        ))}
+        <button type="submit" onClick={handleCreate}>
+          Crear{" "}
+        </button>{" "}
       </form>
 
       {/* Lista de TeamPages */}
@@ -153,6 +248,7 @@ function HomePageUsers() {
             <li key={teamPage._id}>
               <p>Comentario semana: {teamPage.comments}</p>
               <p>Intensidad: {teamPage.intensity}</p>
+              <p>Comentario Mesociclo: {teamPage.mesocycleComment}</p>
               <button onClick={() => handleEdit(teamPage._id)}>Editar</button>
               <button onClick={() => handleDelete(teamPage._id)}>
                 Eliminar

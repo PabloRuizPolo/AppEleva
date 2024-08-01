@@ -68,10 +68,8 @@ export async function PUT(request) {
 }
 
 export async function DELETE(request) {
-  console.log("pppp");
   await connect();
   try {
-    console.log("pasdo");
     const id = request.nextUrl.searchParams.get("id");
     console.log("ID a eliminar:", id); // Agrega un log para verificar el ID
 
