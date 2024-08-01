@@ -15,23 +15,15 @@ export async function GET() {
 
 export async function POST(request) {
   await connect();
-  console.log("He pasado por aqwui");
   try {
     const {
       comments,
       intensity,
-      trainingCalendar, // Remove 'data.'
+      trainingCalendar,
       calendarImage,
       graphImage,
       mesocycleComment,
     } = await request.json();
-    console.log("Received data:", { comments, intensity, trainingCalendar }); // Log only relevant data
-
-    /*
-    if (!Array.isArray(trainingCalendar)) {
-      return NextResponse.json({ error: "trainingCalendar must be an array" });
-    }
-      */
 
     const newTeamPage = new TeamPage({
       comments,
@@ -76,12 +68,25 @@ export async function PUT(request) {
 }
 
 export async function DELETE(request) {
+  console.log("pppp");
   await connect();
   try {
-    const { id } = request.url.searchParams;
-    await TeamPage.findByIdAndDelete(id);
-    return NextResponse.json({ message: "TeamPage deleted" });
+    console.log("pasdo");
+    const id = request.nextUrl.searchParams.get("id");
+    console.log("ID a eliminar:", id); // Agrega un log para verificar el ID
+
+    const deletedTeamPage = await TeamPage.findByIdAndDelete(id);
+
+    if (!deletedTeamPage) {
+      return NextResponse.json(
+        { error: "TeamPage no encontrado" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({ message: "TeamPage eliminado" });
   } catch (error) {
+    console.error("Error al eliminar TeamPage:", error);
     return NextResponse.json({ error: error.message });
   }
 }

@@ -114,7 +114,9 @@ function HomePageUsers() {
   const handleDelete = async (id) => {
     if (window.confirm("¿Estás seguro de eliminar este elemento?")) {
       try {
-        await axios.delete(`/api/TeamPage/${id}`); // Using DELETE for removal
+        console.log("He pasado por awui");
+        await axios.delete(`/api/TeamPage?id=${id}`); // Using DELETE for removal
+        console.log("He pasado por awui tbn");
         setHomePageUsers(
           homePageUsers.filter((teamPage) => teamPage._id !== id)
         );
